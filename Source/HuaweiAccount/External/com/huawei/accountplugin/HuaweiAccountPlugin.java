@@ -6,7 +6,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
@@ -24,13 +26,14 @@ public class HuaweiAccountPlugin {
     private static HuaweiAccountListener mListener = null;
     private static final String TAG = "HuaweiAccountPlugin";
     private static final String MODE = "HUAWEI_LOGIN_MODE";
-    private static final SharedPreferences mSharedPreferences;
+    private static final String PREFS_NAME = "com.huawei.accountplugin";
+    private static SharedPreferences mSharedPreferences;
     
     public static void initialize(NativeActivity activity, HuaweiAccountListener listener) {
         if (!isInit) {
             mActivity = activity;
             mListener = listener;
-            mSharedPreferences = mActivity.getDefaultSharedPreferences();
+            mSharedPreferences = mActivity.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
             isInit = true;
         }
     }
@@ -59,7 +62,7 @@ public class HuaweiAccountPlugin {
         }
     } 
 
-    public static void loggedOut() {
+    public static void logOut() {
         int action = mSharedPreferences.getInt(MODE, Constants.LOGIN_ACTION);
         AccountAuthService authService = createAuthService(action);
         Task<Void> signOutTask = authService.signOut();
@@ -106,8 +109,8 @@ public class HuaweiAccountPlugin {
         });
     }
 
-    private static void login(int action) {
-        AccountAuthService authService = createAuthService(action);
+    private static void login(final int action) {
+        final AccountAuthService authService = createAuthService(action);
         Task<AuthAccount> task = authService.silentSignIn();
         task.addOnSuccessListener(new OnSuccessListener<AuthAccount>() {
             @Override
@@ -123,19 +126,16 @@ public class HuaweiAccountPlugin {
                 // The silent sign-in fails. Your app will call getSignInIntent() to show the
                 // authorization or sign-in screen.
                 Log.e(TAG, "On log in fail: " +e.getMessage());
-                int requestCode, action;
+                int requestCode;
                 switch (action) {
                     case Constants.LOGIN_BY_ID_TOKEN_ACTION:
                         requestCode = Constants.REQUEST_LOGIN_BY_ID_TOKEN;
-                        action = Constants.LOGIN_BY_ID_TOKEN_ACTION;
                         break;
                     case Constants.LOGIN_BY_AUTH_CODE_ACTION:
                         requestCode = Constants.REQUEST_LOGIN_BY_AUTH_CODE;
-                        action = Constants.LOGIN_BY_AUTH_CODE_ACTION;
                         break;
                     default:
                         requestCode = Constants.REQUEST_LOGIN;
-                        action = Constants.LOGIN_ACTION;
                         break;    
                 }
                 if (e instanceof ApiException) {
@@ -187,7 +187,7 @@ public class HuaweiAccountPlugin {
             onLoginResult(action, authAccount);
         } else {
             // The sign-in failed. Find the failure cause from the status code. For more information, please refer to Error Codes.
-            String message = "sign in failed : " +((ApiException)authAccountTask.getException()).getStatusCode()
+            String message = "sign in failed : " +((ApiException)authAccountTask.getException()).getStatusCode();
             Log.e(TAG, message);
             if (mListener != null) {
                 mListener.onException(action, message);
@@ -201,10 +201,10 @@ public class HuaweiAccountPlugin {
         if (mListener != null) {
             switch (action) {
                 case Constants.LOGIN_BY_ID_TOKEN_ACTION:
-                    mListener.onGetIdToken(authAccount.getIdToken());
+                    mListener.onGetIdToken(authAccount);
                     break;
                 case Constants.LOGIN_BY_AUTH_CODE_ACTION:
-                    mListener.onGetAuthCode(authAccount.getAuthorizationCode());
+                    mListener.onGetAuthCode(authAccount);
                     break;
                 default:
                     mListener.onLoggedIn(authAccount);
