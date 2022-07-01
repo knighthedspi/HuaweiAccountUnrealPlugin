@@ -44,7 +44,7 @@ FOnLogOutSuccess UHuaweiAccountBlueprint::_onLogOutSuccess;
 FOnLogOutException UHuaweiAccountBlueprint::_onLogOutException;
 void UHuaweiAccountBlueprint::logout(const FOnLogOutSuccess &onSuccess, const FOnLogOutException &onException)
 {
-    Account::loginWithoutVerification();
+    Account::logOut();
     UHuaweiAccountBlueprint::_onLogOutSuccess = onSuccess;
     UHuaweiAccountBlueprint::_onLogOutException = onException;
 }
