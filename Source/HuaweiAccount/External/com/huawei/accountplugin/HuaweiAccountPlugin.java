@@ -151,7 +151,7 @@ public class HuaweiAccountPlugin {
     }
 
     private static AccountAuthService createAuthService(int action) {
-        AccountAuthParamsHelper authParamHelper = new AccountAuthParamsHelper(AccountAuthParams.DEFAULT_AUTH_REQUEST_PARAM).setEmail();
+        AccountAuthParamsHelper authParamHelper = new AccountAuthParamsHelper(AccountAuthParams.DEFAULT_AUTH_REQUEST_PARAM).setEmail().setId();
         switch (action) {
             case Constants.LOGIN_BY_ID_TOKEN_ACTION:
                 authParamHelper = authParamHelper.setIdToken();
