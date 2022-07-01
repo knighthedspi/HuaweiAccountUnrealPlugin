@@ -206,7 +206,7 @@ huawei::Account::cancelAuthorization();
 Implement a listener class to receive information in all the Account callback events
 
 Action types table:
-<div style="width:80px">Type</div>                       | Description                | 
+|<div style="width:80px">Type</div>                       | Description                | 
   | ------------------------------------------------------------ | ----------------------- |
   | LOGIN_ACTION | Login without ID verification |
   | LOGIN_BY_ID_TOKEN_ACTION | Login via ID token(OpenID connect) |
@@ -238,7 +238,7 @@ huawei::Account::setListener(new YourAccountListener());
 ```
 
 You can get the below account information
-<div style="width:80px">Type</div>                       | Description                | 
+|<div style="width:80px">Type</div>                       | Description                | 
   | ------------------------------------------------------------ | ----------------------- |
   | displayName | user's nickname |
   | avatarUriString | user's profile picture URI |
