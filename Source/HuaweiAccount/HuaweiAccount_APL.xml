@@ -5,6 +5,36 @@
 		<setStringFromProperty result="ConfigFile" ini="Engine" section="/Script/HuaweiAccount.HuaweiAccountSettings" property="HuaweiAGCConfig" default="Config/AGC/agconnect-services.json"/>
 	</init>
 
+  <!-- optional files or directories to copy to Intermediate/Android/APK -->
+  <gradleCopies>
+
+    <copyDir src="$S(PluginDir)/../ThirdParty/Android/Java"
+          dst = "$S(BuildDir)/src" />
+
+    <copyDir src="$S(PluginDir)/../ThirdParty/Android/Java"
+					dst = "$S(BuildDir)/gradle/app/src/main/java" />
+
+    <copyDir src="$S(PluginDir)/../ThirdParty/Android/permission_library"
+					dst="$S(BuildDir)/JavaLibs/permission_library" />
+
+    <copyDir src="$S(PluginDir)/../ThirdParty/Android/permission_library"
+					dst="$S(BuildDir)/gradle/permission_library" />
+ 
+    <copyFile src="$S(PluginDir)/../ThirdParty/Android/gradle-wrapper.properties"
+          dst="$S(BuildDir)/gradle/gradle/wrapper/gradle-wrapper.properties"/>
+
+    <copyFile src="$S(PluginDir)/../ThirdParty/Android/build.gradle"
+          dst="$S(BuildDir)/gradle/build.gradle"/>
+
+  </gradleCopies>
+
+  <gradleProperties>
+    <insert>
+      android.useAndroidX=true
+      android.enableJetifier=true
+    </insert>
+  </gradleProperties>
+  
     <buildscriptGradleAdditions>
         <log text="Huawei Account Configure HMS Core SDK"/>
         <insert>
@@ -117,7 +147,7 @@
                         accountJson.put("openId", account.getOpenId());
                         accountJson.put("unionId", account.getUnionId());
                     } catch (Exception e) {
-                        nativeOnException(Constants.LOGIN_ACTION, "Failed to parse data");
+                        nativeOnAccountException(Constants.LOGIN_ACTION, "Failed to parse data");
                     }
                     return accountJson.toString();
                 }

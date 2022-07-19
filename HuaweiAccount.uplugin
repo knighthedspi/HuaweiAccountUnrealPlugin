@@ -1,20 +1,21 @@
 {
-	"FileVersion": 3,
-	"Version": 1,
-	"VersionName": "1.0",
-	"FriendlyName": "HuaweiAccount",
-	"Description": "Account Kit Plugin for Unreal Game Engine",
-	"Category": "Service",
-	"CreatedBy": "Huawei Japan DTSE",
-	"CreatedByURL": "",
-	"DocsURL": "",
-	"MarketplaceURL": "",
-	"SupportURL": "",
-	"Modules": [
-		{
-			"Name": "HuaweiAccount",
-			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen"
-		}
-	]
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "1.0",
+  "FriendlyName": "HuaweiAccount",
+  "Description": "Account Kit Plugin for Unreal Game Engine",
+  "Category": "Service",
+  "CreatedBy": "Huawei Japan DTSE",
+  "CreatedByURL": "",
+  "DocsURL": "",
+  "MarketplaceURL": "",
+  "EnabledByDefault": true,
+  "SupportURL": "",
+  "Modules": [
+    {
+      "Name": "HuaweiAccount",
+      "Type": "Runtime",
+      "LoadingPhase": "PreLoadingScreen"
+    }
+  ]
 }

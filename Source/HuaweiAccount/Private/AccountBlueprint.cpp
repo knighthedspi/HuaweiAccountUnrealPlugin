@@ -60,57 +60,57 @@ void UHuaweiAccountBlueprint::cancelAuthorization(const FOnCancelAuthSuccess &on
 
 void UHuaweiAccountBlueprint::onLoggedIn(const AccountInfo account)
 {
-    UHuaweiAccountBlueprint::_onLogInSuccess.ExecuteIfBound(convertFromRawData(account));
+	UHuaweiAccountBlueprint::_onLogInSuccess.ExecuteIfBound(convertFromRawData(account));
 }
 
 void UHuaweiAccountBlueprint::onGetIdToken(const FString idToken, const AccountInfo account)
 {
-    UHuaweiAccountBlueprint::_onLogInByIdTokenSuccess.ExecuteIfBound
-    (
-        idToken,
-        convertFromRawData(account)
-    );
+	UHuaweiAccountBlueprint::_onLogInByIdTokenSuccess.ExecuteIfBound
+	(
+		idToken,
+		convertFromRawData(account)
+	);
 }
 
 void UHuaweiAccountBlueprint::onGetAuthCode(const FString authCode, const AccountInfo account)
 {
-    UHuaweiAccountBlueprint::_onLogInByAuthCodeSuccess.ExecuteIfBound
-    (
-        authCode,
-        convertFromRawData(account)
-    );
+	UHuaweiAccountBlueprint::_onLogInByAuthCodeSuccess.ExecuteIfBound
+	(
+		authCode,
+		convertFromRawData(account)
+	);
 }
 
 void UHuaweiAccountBlueprint::onLoggedOut()
 {
-    UHuaweiAccountBlueprint::_onLogOutSuccess.ExecuteIfBound();
+	UHuaweiAccountBlueprint::_onLogOutSuccess.ExecuteIfBound();
 }
 
 void UHuaweiAccountBlueprint::onCancelledAuth()
 {
-    UHuaweiAccountBlueprint::_onCancelAuthSuccess.ExecuteIfBound();
+	UHuaweiAccountBlueprint::_onCancelAuthSuccess.ExecuteIfBound();
 }
 
 void UHuaweiAccountBlueprint::onException(int action, const FString message)
 {
-    switch (action)
-    {
-    case LOGIN_ACTION:
-        UHuaweiAccountBlueprint::_onLogInException.ExecuteIfBound(message);
-        break;
-    case LOGIN_BY_ID_TOKEN_ACTION:
-        UHuaweiAccountBlueprint::_onLogInByIdTokenException.ExecuteIfBound(message);
-        break;
-    case LOGIN_BY_AUTH_CODE_ACTION:
-        UHuaweiAccountBlueprint::_onLogInByAuthCodeException.ExecuteIfBound(message);
-        break;
-    case LOGOUT_ACTION:
-        UHuaweiAccountBlueprint::_onLogOutException.ExecuteIfBound(message);
-        break;
-    case CANCEL_AUTH_ACTION:
-        UHuaweiAccountBlueprint::_onCancelAuthException.ExecuteIfBound(message);
-        break;
-    default:
-        break;
-    }
+	switch (action)
+	{
+	case LOGIN_ACTION:
+		UHuaweiAccountBlueprint::_onLogInException.ExecuteIfBound(message);
+		break;
+	case LOGIN_BY_ID_TOKEN_ACTION:
+		UHuaweiAccountBlueprint::_onLogInByIdTokenException.ExecuteIfBound(message);
+		break;
+	case LOGIN_BY_AUTH_CODE_ACTION:
+		UHuaweiAccountBlueprint::_onLogInByAuthCodeException.ExecuteIfBound(message);
+		break;
+	case LOGOUT_ACTION:
+		UHuaweiAccountBlueprint::_onLogOutException.ExecuteIfBound(message);
+		break;
+	case CANCEL_AUTH_ACTION:
+		UHuaweiAccountBlueprint::_onCancelAuthException.ExecuteIfBound(message);
+		break;
+	default:
+		break;
+	}
 }
